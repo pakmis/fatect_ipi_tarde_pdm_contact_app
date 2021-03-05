@@ -9,34 +9,32 @@ import {
   View,
   Alert
 } from "react-native";
+import ContactInput from "./components/ContactInput";
+import ContactItem from "./components/ContactItem";
 
 export default function App() {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-  const [contatos, setContatos] = useState([]);
-  const [memoCount, setMemoCount] = useState(0);
+  const [contatos, setContactList] = useState([]);
+  const [contactCount, setMemoCount] = useState(0);
   const numberPattern = /\d+/g;
   const namePattern = /^[A-Za-z]+([\ A-Za-z]+)*/;
 
-  const handleAddContact = () => {
+  const handleAddContact = (name, number) => {
     if (name && number) {
-      console.log('Name: ', name)
-      console.log('Number: ', number)
-      setContatos((contatos) => {
+      console.log("Name: ", name);
+      console.log("Number: ", number);
+      setContactList((contatos) => {
         setMemoCount((count) => count + 1);
         return [
           ...contatos,
           {
-            key: memoCount.toString(),
+            key: contactCount.toString(),
             value: {
-              name: name.match( namePattern ).join(''),
-              number: number.match( numberPattern ).join(''),
+              name: name.match(namePattern).join(""),
+              number: number.match(numberPattern).join(""),
             },
           },
         ];
       });
-      setName("");
-      setNumber("");
     } else {
       Alert.alert(
         "Aviso",
@@ -45,50 +43,39 @@ export default function App() {
           {
             text: "Cancel",
             onPress: () => console.log("Cancel Pressed"),
-            style: "cancel"
+            style: "cancel",
           },
-          { text: "OK", onPress: () => console.log("OK Pressed") }
+          { text: "OK", onPress: () => console.log("OK Pressed") },
         ],
         { cancelable: false }
-      )
+      );
     }
   };
 
+  const handleRemoveContact = (key) => {
+    setContactList((contactList) => {
+      return contactList.filter(contact => {
+        return contact.key !== key
+      })
+    })
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.lembreteInputView}>
-        <TextInput
-          value={name}
-          onChangeText={(text) => setName(text)}
-          style={styles.lembreteTextInput}
-          placeholder="Digite um nome"
-        />
-        <TextInput
-          value={number}
-          keyboardType="numeric"
-          onChangeText={(text) => setNumber(text)}
-          style={styles.lembreteTextInput}
-          placeholder="Digite um numero"
-        />
-
-        <View style={styles.memoButton}>
-          <Button title="Add" onPress={handleAddContact} />
-        </View>
-        <View style={styles.memoButton}>
-          <Button title="Clear" onPress={() => setContatos([])} />
-        </View>
-      </View>
-
-      <View style={styles.memoList}>
+      <ContactInput
+        addContact={handleAddContact}
+        clearList={() => setContactList([])}
+      />
+      <View style={styles.contactList}>
         <FlatList
           data={contatos}
-          renderItem={(contato) => (
-            <View style={styles.itemNaLista}>
-              <View key={contato.item.value}>
-                <Text>Nome: {contato.item.value.name}</Text>
-                <Text>Numero: {contato.item.value.number} </Text>
-              </View>
-            </View>
+          renderItem={(contact) => (
+            <ContactItem
+              name={contact.item.value.name}
+              number={contact.item.value.number}
+              contactKey={contact.item.key}
+              onDelete={handleRemoveContact}
+            />
           )}
         />
       </View>
@@ -101,33 +88,8 @@ const styles = StyleSheet.create({
     padding: 50,
     flex: 1,
   },
-  lembreteInputView: {
-    alignItems: "center",
-    marginBottom: 12,
-  },
-  memoButton: {
-    marginBottom: 1,
-    width: "80%",
-  },
-  lembreteTextInput: {
-    borderBottomColor: "#000000",
-    width: "80%",
-    borderBottomWidth: 1,
-    marginBottom: 4,
-    padding: 2,
-    textAlign: "center",
-  },
-  memoList: {
+  contactList: {
     width: "80%",
     alignSelf: "center"
-  },
-  itemNaLista: {
-    padding: 12,
-    backgroundColor: "#CCC",
-    borderColor: "#000",
-    borderWidth: 1,
-    marginBottom: 8,
-    borderRadius: 8,
-    alignItems: "center",
   },
 });
