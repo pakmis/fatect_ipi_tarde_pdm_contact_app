@@ -31,10 +31,6 @@ const ContactInput = (props) => {
           }}
         />
       </View>
-
-      <View style={styles.addContactButton}>
-        <Button title="Clear" onPress={() => props.clearList()} />
-      </View>
     </View>
   );
 };
