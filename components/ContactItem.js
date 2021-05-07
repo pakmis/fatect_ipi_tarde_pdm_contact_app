@@ -1,4 +1,5 @@
 import React from "react";
+import avatar from '../assets/avatar.png';
 
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 
@@ -11,7 +12,7 @@ const ContactItem = (props) => {
     
     <Image
         style={styles.imagem}
-        source={{uri: props.imagem}}
+        source={props.image ? {uri: props.image} : avatar}
       />
       <View style={styles.infoContainer}>
         <Text style={styles.name}>Nome: {props.name}</Text>

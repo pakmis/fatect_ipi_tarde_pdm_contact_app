@@ -1,33 +1,40 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Button } from 'react-native';
+import ImagePicker from './ImagePicker';
 
 const ContactInput = (props) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const [ imageURI, setImageURI ] = useState();
 
   return (
     <View style={styles.contactInputView}>
       <TextInput
         value={name}
         onChangeText={(text) => setName(text)}
-        style={styles.ContactTextInput}
+        style={styles.contactTextInput}
         placeholder="Digite um nome"
       />
       <TextInput
         value={number}
         keyboardType="numeric"
         onChangeText={(text) => setNumber(text)}
-        style={styles.ContactTextInput}
+        style={styles.contactTextInput}
         placeholder="Digite um numero"
       />
+
+      <View style={styles.imagePicker}>
+        <ImagePicker onImagePick={setImageURI} />
+      </View>
 
       <View style={styles.addContactButton}>
         <Button
           title="Add"
           onPress={() => {
-            props.addContact(name, number);
+            props.addContact(name, number, imageURI);
             setName("");
             setNumber("");
+            setImageURI()
           }}
         />
       </View>
@@ -44,9 +51,13 @@ const styles = StyleSheet.create({
     marginBottom: 1,
     width: "80%",
   },
-  ContactTextInput: {
+  imagePicker: {
+    marginBottom: 1,
+    width: "100%",
+  },
+  contactTextInput: {
     borderBottomColor: "#000000",
-    width: "80%",
+    width: "100%",
     borderBottomWidth: 1,
     marginBottom: 4,
     padding: 2,
