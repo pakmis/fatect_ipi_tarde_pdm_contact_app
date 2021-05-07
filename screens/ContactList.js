@@ -30,7 +30,7 @@ const ContactList = (props) => {
               name: contact.item.name, id: contact.id
             })
           }}
-          image={contact.item.imageURL}
+          image={contact.item.imageURI}
         />
       )}
     />

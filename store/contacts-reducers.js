@@ -8,11 +8,12 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case contactsActions.ADD_CONTACT:
+      console.log(action.contactDetails.contact);
       const contact = new Contact(
         new Date().toString(),
         action.contactDetails.contact.name,
         action.contactDetails.contact.number,
-        action.contactDetails.contact.imageURL
+        action.contactDetails.contact.imageURI
       );
       return {
         contacts: state.contacts.concat(contact),
