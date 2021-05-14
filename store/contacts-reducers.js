@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
     case contactsActions.ADD_CONTACT:
       console.log(action.contactDetails.contact);
       const contact = new Contact(
-        new Date().toString(),
+        action.contactDetails.contact.id.toString(),
         action.contactDetails.contact.name,
         action.contactDetails.contact.number,
         action.contactDetails.contact.imageURI
@@ -18,6 +18,13 @@ export default (state = initialState, action) => {
       return {
         contacts: state.contacts.concat(contact),
       };
+    case contactsActions.LIST_CONTACTS:
+      return {
+        contacts: action.contacts.map(
+          (l) => new Contact(l.id.toString(), l.name, l.number, l.imageUri)
+        ),
+      };
+
     default:
       return state;
   }

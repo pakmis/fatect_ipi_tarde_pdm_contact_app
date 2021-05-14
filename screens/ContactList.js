@@ -9,13 +9,19 @@ import {
   Alert,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import ContactItem from "../components/ContactItem.js";
 import Header from "../components/Header.js";
+import * as contactsActions from '../store/contacts-actions';
+
 
 const ContactList = (props) => {
   const contacts = useSelector((state) => state.contacts.contacts);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(contactsActions.listContacts());
+  }, [dispatch]);
 
   return (
     <FlatList
@@ -26,9 +32,10 @@ const ContactList = (props) => {
           name={contact.item.name}
           number={contact.item.number}
           onSelect={() => {
-            props.navigation.navigate('ContactDetails', {
-              name: contact.item.name, id: contact.id
-            })
+            props.navigation.navigate("ContactDetails", {
+              name: contact.item.name,
+              id: contact.id,
+            });
           }}
           image={contact.item.imageURI}
         />
