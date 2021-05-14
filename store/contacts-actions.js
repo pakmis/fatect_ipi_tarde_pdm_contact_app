@@ -22,7 +22,6 @@ export const addContact = (contact) => {
         48.8584,
         2.2945
       );
-      console.log('resultadodb: ', resultadoDB);
 
       const newContact = {
         ...contact,

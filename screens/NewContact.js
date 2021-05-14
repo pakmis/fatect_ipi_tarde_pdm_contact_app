@@ -46,7 +46,7 @@ const NewContact = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 50,
+    padding: 20,
     flex: 1,
   },
 });

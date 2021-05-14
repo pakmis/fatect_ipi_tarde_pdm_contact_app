@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Button } from 'react-native';
-import ImagePicker from './ImagePicker';
+import React, { useState } from "react";
+import { ScrollView, View, StyleSheet, TextInput, Button } from "react-native";
+import ImagePicker from "./ImagePicker";
+import LocalizationCapture from "./LocalizationCapture";
 
 const ContactInput = (props) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-  const [ imageURI, setImageURI ] = useState();
+  const [imageURI, setImageURI] = useState();
 
   return (
-    <View style={styles.contactInputView}>
+    <ScrollView style={styles.contactInputView}>
       <TextInput
         value={name}
         onChangeText={(text) => setName(text)}
@@ -27,6 +28,10 @@ const ContactInput = (props) => {
         <ImagePicker onImagePick={setImageURI} />
       </View>
 
+      <View style={styles.localizationCapture}>
+        <LocalizationCapture />
+      </View>
+
       <View style={styles.addContactButton}>
         <Button
           title="Add"
@@ -34,24 +39,27 @@ const ContactInput = (props) => {
             props.addContact(name, number, imageURI);
             setName("");
             setNumber("");
-            setImageURI()
+            setImageURI();
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   contactInputView: {
-    alignItems: "center",
-    marginBottom: 12,
+    width: '100%'
   },
   addContactButton: {
     marginBottom: 1,
-    width: "80%",
+    width: "100%",
   },
   imagePicker: {
+    marginBottom: 1,
+    width: "100%",
+  },
+  localizationCapture: {
     marginBottom: 1,
     width: "100%",
   },
