@@ -9,12 +9,13 @@ const NewContact = ({navigation}) => {
   const numberPattern = /\d+/g;
   const namePattern = /^[A-Za-z]+([\ A-Za-z]+)*/;
 
-  const handleAddContact = (name, number, imageURI) => {
+  const handleAddContact = (name, number, imageURI, localization) => {
     if (name && number) {
       dispatch(contactsActions.addContact({
         name: name.match(namePattern).join(""),
         number: number.match(numberPattern).join(""),
-        imageURI: imageURI
+        imageURI: imageURI,
+        localization: localization ? localization : { lat: '', lng: ''} 
       }))
       navigation.goBack();
     } else {

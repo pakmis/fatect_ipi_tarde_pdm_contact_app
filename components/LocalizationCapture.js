@@ -11,7 +11,7 @@ import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import MapPreview from "./MapPreview";
 
-const LocalizationCapture = () => {
+const LocalizationCapture = (props) => {
   const [capturing, setCapturing] = useState(false);
   const [ localization, setLocalization ] = useState();
 
@@ -35,13 +35,15 @@ const LocalizationCapture = () => {
       setCapturing(true);
       try {
         const location = await Location.getCurrentPositionAsync({
-          
           timeout: 5000,
         });
-        setLocalization({
+        const loc = {
           lat: location.coords.latitude,
           lng: location.coords.longitude,
-        });
+        }
+        setLocalization(loc);
+        props.onLocalizationCapture(loc);
+        console.log('loc: ', loc);
       } catch (error) {
         Alert.alert(
           "Localização indiponivel",

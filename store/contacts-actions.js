@@ -5,22 +5,25 @@ import { insertContact, searchContacts } from "../helpers/db";
 
 export const addContact = (contact) => {
   return async (dispatch) => {
-    const name = contact.imageURI.split("/").pop();
-    const newPath = FileSystem.documentDirectory + name;
+    let newPath = '';
+    if (contact.imageURI) {
+      const name = contact.imageURI.split("/").pop();
+      newPath = FileSystem.documentDirectory + name;
 
-    try {
       await FileSystem.moveAsync({
         from: contact.imageURI,
         to: newPath,
       });
+    }
 
+    try {
       const resultadoDB = await insertContact(
         contact.name,
         contact.number,
         newPath,
-        "Torre Eiffel",
-        48.8584,
-        2.2945
+        "Exemplo",
+        contact.localization.lat,
+        contact.localization.lng
       );
 
       const newContact = {

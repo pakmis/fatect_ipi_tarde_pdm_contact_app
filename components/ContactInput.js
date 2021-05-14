@@ -7,6 +7,7 @@ const ContactInput = (props) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [imageURI, setImageURI] = useState();
+  const [localization, setLocalization] = useState();
 
   return (
     <ScrollView style={styles.contactInputView}>
@@ -29,17 +30,18 @@ const ContactInput = (props) => {
       </View>
 
       <View style={styles.localizationCapture}>
-        <LocalizationCapture />
+        <LocalizationCapture onLocalizationCapture={setLocalization}/>
       </View>
 
       <View style={styles.addContactButton}>
         <Button
           title="Add"
           onPress={() => {
-            props.addContact(name, number, imageURI);
+            props.addContact(name, number, imageURI, localization);
             setName("");
             setNumber("");
             setImageURI();
+            setLocalization();
           }}
         />
       </View>

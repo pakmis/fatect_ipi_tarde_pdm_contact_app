@@ -9,6 +9,7 @@ const MapPreview = (props) => {
   &maptype=roadmap
   &markers=color:red%7Clabel:C%7C40.718217,-73.998284
   &key=${MAP_API_KEY}`;
+  
   return (
     <View style={{ ...styles.mapPreview, ...props.style }}>
       {props.localization ? (
